@@ -1,0 +1,45 @@
+{
+  "ava": {
+    "babel": {
+      "presets": [
+        "latest"
+      ]
+    },
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ]
+  },
+  "author": "Erwan Ledoux",
+  "dependencies": {
+    "lodash.assign": "^4.2.0",
+    "lodash.flatten": "^4.4.0",
+    "lodash.merge": "^4.3.0",
+    "lodash.values": "^4.3.0",
+    "pluralize": "^3.0.0",
+    "transactions-redux-socketio": "latest",
+    "transactions-redux-request": "latest",
+    "transactions-redux-reselector": "latest",
+    "redux": "^3.6.0"
+  },
+  "description": "In the framework of transactions, this is a frontend plugin that gives you smart reducers for your app state",
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.22.0",
+    "nodemon": "^1.11.0",
+    "node-sass": "^4.5.3",
+    "standard": "^7.0.1"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "transactions-interface-state",
+  "scripts": {
+    "compile": "babel --presets latest -d lib/ src/",
+    "test": "ava -v",
+    "dev": "npm run dev",
+    "dev-watch": "nodemon src/index.js --watch src --exec \"npm run compile\""
+  },
+  "version": "0.0.1"
+}
