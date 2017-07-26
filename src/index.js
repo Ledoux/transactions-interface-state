@@ -2,6 +2,7 @@ import * as authorization from './reducers/authorization'
 import * as flash from './reducers/flash'
 const form = require('./reducers/form').default
 import * as information from './reducers/information'
+import * as navigation from './reducers/navigation'
 import * as modal from './reducers/modal'
 import * as user from './reducers/user'
 import * as authorizationSaga from './sagas/authorization'
@@ -27,6 +28,7 @@ const transactionsInterfaceState = Object.assign({
   flash,
   form,
   modal,
+  navigation,
   information,
   user
 )
