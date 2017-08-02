@@ -1,6 +1,6 @@
 import pluralize from 'pluralize'
 
-export default function createSubscription (config = {}) {
+export function createSubscription (config = {}) {
   // unpack
   const { modes,
     hasJoinedModeAccess

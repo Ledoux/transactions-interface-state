@@ -22,9 +22,10 @@ export function setActiveUser () {
   }
 }
 
-export function setUser (user) {
+export function setUser (user, config) {
   return {
     type: SET_USER,
+    config,
     user
   }
 }

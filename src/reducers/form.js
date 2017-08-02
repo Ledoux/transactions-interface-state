@@ -1,7 +1,7 @@
 import flatten from 'lodash.flatten'
 import { getReducerPackage } from 'transactions-redux-normalizer'
 
-import { getLocationSearch } from '../utils/navigation'
+import { getLocationSearch } from '../utils/location'
 
 // automatic packager
 const reducerPackage = getReducerPackage('form')

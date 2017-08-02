@@ -4,7 +4,6 @@ import { takeEvery } from 'redux-saga'
 
 import { REQUEST_AUTHORIZED_API } from '../reducers/authorization'
 import { apiFetch } from '../utils/apis'
-import { guestMode } from '../utils/subscription'
 
 const AUTH_RENEWAL_THRESHOLD = 1000 * 60 * 5 // 5 minutes before expiry
 
@@ -41,8 +40,12 @@ export function * getAuthorizationData (action) {
   // so we can just look at the collectionNames
   // available for the guests
   if (typeof user.authToken === 'undefined') {
-    return action.method === 'GET' &&
-      guestMode.availableCollectionNames.includes(action.collectionName)
+    if (action.method === 'GET') {
+      const subscription = action.subscription
+      const guestMode = subscription && subscription.guestMode
+      const availableCollectionNames = guestMode && guestMode.availableCollectionNames
+      return availableCollectionNames && availableCollectionNames.includes(action.collectionName)
+    }
   }
   // else we need to check first the good set of the token
   if (!hasValidAuthToken(user)) {

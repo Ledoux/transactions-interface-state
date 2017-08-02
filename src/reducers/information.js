@@ -2,8 +2,8 @@ import assign from 'lodash.assign'
 
 import { trackEvent } from '../utils/tracking'
 
-export const SHOW_INFORMATION = 'SHOW_INFORMATION'
 export const CLOSE_INFORMATION = 'CLOSE_INFORMATION'
+export const SHOW_INFORMATION = 'SHOW_INFORMATION'
 
 const intialState = {
   isActive: false

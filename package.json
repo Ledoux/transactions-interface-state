@@ -39,7 +39,7 @@
     "compile": "babel --presets latest -d lib/ src/",
     "test": "ava -v",
     "dev": "npm run dev",
-    "dev-watch": "nodemon src/index.js --watch src --exec \"npm run compile\""
+    "dev-watch": "nodemon --watch src --exec \"npm run compile\""
   },
   "version": "0.0.1"
 }
