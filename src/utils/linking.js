@@ -9,8 +9,6 @@ export function isAuthorizedLink (link, authorizedModeNames) {
 }
 
 export function getAuthorizedLinks (authorizedModes, menuLinks = []) {
-  const authorizedModeNames = authorizedModes.map(authorizedMode => authorizedMode.name)
-  console.log('menuLinks', menuLinks)
   return menuLinks.filter(link => isAuthorizedLink(link, authorizedModeNames))
     .map(({label, path}) => { return {label, path} })
 }

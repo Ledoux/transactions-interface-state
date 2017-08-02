@@ -1,3 +1,5 @@
+import { getDirectFilteredElements } from 'transactions-redux-reselector'
+
 export const reselectorInitialState = {
   ALL: {},
   WITH_ENTITY_NAME_JOIN: {
@@ -48,7 +50,7 @@ export function getFilteredElements (id, filter, elements) {
         element[filter.key] === filter.value)]
           .filter(element => element)
     case 'WITH_NOT_IS_SEEN':
-      return elements.filter(element => !element.isSeen)      
+      return elements.filter(element => !element.isSeen)
     case 'WITH_SIGN_JOIN':
       return filter.key && filter.value && [elements.find(element =>
         element[filter.key] === filter.value)]

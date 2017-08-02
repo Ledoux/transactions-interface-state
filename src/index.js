@@ -4,12 +4,14 @@ const form = require('./reducers/form').default
 import * as information from './reducers/information'
 import * as modal from './reducers/modal'
 import * as navigation from './reducers/navigation'
+const pipeline = require('./reducers/pipeline').default
 import * as reselector from './reducers/reselector'
 import * as user from './reducers/user'
 import * as authorizationSaga from './sagas/authorization'
 import * as formSaga from './sagas/form'
 import transactionsSaga from './sagas/transactions'
 import * as userSaga from './sagas/user'
+import * as automatic from './utils/automatic'
 import * as linking from './utils/linking'
 import * as location from './utils/location'
 import * as apis from './utils/apis'
@@ -25,6 +27,7 @@ const transactionsInterfaceState = Object.assign({
 },
   apis,
   authorization,
+  automatic,
   flash,
   form,
   information,
@@ -32,6 +35,7 @@ const transactionsInterfaceState = Object.assign({
   location,
   modal,
   navigation,
+  pipeline,
   redirection,
   reselector,
   subscription,

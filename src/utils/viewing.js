@@ -1,15 +1,15 @@
 import pluralize from 'pluralize'
 
 export function createCardViewer (CardComponentsByComponentName) {
-  const CardComponentsByCollectionName = {}
+  const CardComponentsByEntityName = {}
   Object.keys(CardComponentsByComponentName)
     .forEach(key => {
       const Component = CardComponentsByComponentName[key]
-      const CollectionName = key.slice(0, -4)
+      const collectionName = key.slice(0, -4)
       CardComponentsByEntityName[
-        `${CollectionName[0].toLowerCase()}${CollectionName.slice(1)}`] = Component
+        `${collectionName[0].toLowerCase()}${collectionName.slice(1)}`] = Component
     })
-  return (state=CardComponentsByCollectionName) => state
+  return (state=CardComponentsByEntityName) => state
 }
 
 export function createItemViewer (ItemComponentsByComponentName) {
@@ -17,9 +17,9 @@ export function createItemViewer (ItemComponentsByComponentName) {
   Object.keys(ItemComponentsByComponentName)
     .forEach(key => {
       const Component = ItemComponentsByComponentName[key]
-      const CollectionName = pluralize(key.slice(0, -4), 2)
+      const collectionName = pluralize(key.slice(0, -4), 2)
       ItemComponentsByCollectionName[
-        `${CollectionName[0].toLowerCase()}${CollectionName.slice(1)}`
+        `${collectionName[0].toLowerCase()}${collectionName.slice(1)}`
       ] = Component
     })
   return (state=ItemComponentsByCollectionName) => state

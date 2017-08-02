@@ -60,8 +60,13 @@ export function createSubscription (config = {}) {
   })
   // return
   return { guestMode,
+    joinedModeCollectionNames,
+    joinedModeNames,
+    joinedModes,
     modeJoinsByCollectionName,
+    modeNamesBySingularOrPluralName,
     modeNames,
-    modes
+    modes,
+    modesBySingularOrPluralName
   }
 }

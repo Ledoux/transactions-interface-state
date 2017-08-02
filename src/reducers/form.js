@@ -87,8 +87,8 @@ const getFormJoin = reducerPackage.getFormJoin = (state, collectionName) => {
   }
 }
 reducerPackage.getFormJoins = (state, collectionNames) => {
-  return collectionNames.map(collectionName =>
-    getFormJoin(state, collectionName))
+  return (collectionNames && collectionNames.map(collectionName =>
+    getFormJoin(state, collectionName))) || []
 }
 reducerPackage.getNewForm = () => {
   const search = getLocationSearch(window.location.search)

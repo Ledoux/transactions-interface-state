@@ -7,6 +7,7 @@ export const SET_AUTHORIZATION_SELECTED_MODE = 'SET_AUTHORIZATION_SELECTED_MODE'
 
 const intialState = { allModes: [],
   collectionNames: null,
+  modeNamesBySingularOrPluralName: {},
   modes:  null,
   links: null,
   selectedMode: null

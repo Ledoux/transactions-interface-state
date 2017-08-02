@@ -21,7 +21,6 @@ function * fromWatchSetUserData (action) {
   const { active,
     id
   } = action.user
-  console.log('action.config', action.config)
   if (!action.config || !action.config.requestTransactions) {
     console.warn('transactions-interface-state fromWatchSetUserData, you need to pass a requestTransactions in your action')
     return
