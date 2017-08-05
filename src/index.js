@@ -11,10 +11,11 @@ import * as authorizationSaga from './sagas/authorization'
 import * as formSaga from './sagas/form'
 import transactionsSaga from './sagas/transactions'
 import * as userSaga from './sagas/user'
+import * as apis from './utils/apis'
 import * as automatic from './utils/automatic'
 import * as linking from './utils/linking'
 import * as location from './utils/location'
-import * as apis from './utils/apis'
+import * as props from './utils/props'
 import * as redirection from './utils/redirection'
 import * as subscription from './utils/subscription'
 import * as viewing from './utils/viewing'
@@ -36,6 +37,7 @@ const transactionsInterfaceState = Object.assign({
   modal,
   navigation,
   pipeline,
+  props,
   redirection,
   reselector,
   subscription,

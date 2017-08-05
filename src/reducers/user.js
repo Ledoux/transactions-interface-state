@@ -3,7 +3,7 @@ import assign from 'lodash.assign'
 export const SET_ACTIVE_USER = 'SET_ACTIVE_USER'
 export const SET_USER = 'SET_USER'
 
-const intialState = null
+const intialState = {}
 
 export function user (state = intialState, action) {
   switch (action.type) {
