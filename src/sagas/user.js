@@ -14,7 +14,6 @@ import { SET_USER } from '../reducers/user'
 import { IS_UNDER_CONSTRUCTION } from '../utils/config'
 import { getAuthorizedLinks } from '../utils/linking'
 import { getLocationSearch } from '../utils/location'
-import { socketio } from '../utils/socketio'
 
 // DATA
 function * fromWatchSetUserData (action) {
@@ -27,7 +26,9 @@ function * fromWatchSetUserData (action) {
   }
   if (active) {
     // say to the socket server that we are connected as a user !
-    socketio.emit('connect_user', action.user)
+    if (action.socketio) {
+      action.socketio.emit('connect_user', action.user)
+    }
     // now we need to get all the joined collections
     // that say more about the user... Is she/he a reviewer, an editor...?
     yield put(action.config.requestTransactions('GET',
