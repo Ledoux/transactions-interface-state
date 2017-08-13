@@ -18,7 +18,6 @@
     "lodash.sample": "^4.2.1",
     "lodash.values": "^4.3.0",
     "pluralize": "^3.0.0",
-    "transactions-redux-request": "latest",
     "transactions-redux-reselector": "latest",
     "redux": "^3.6.0"
   },

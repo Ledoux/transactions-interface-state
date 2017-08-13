@@ -1,6 +1,6 @@
-import { IS_PROD } from './config'
+import { IS_PRODUCTION } from './config'
 
-const MIXPANEL_API_TOKEN = IS_PROD ? '<>' : '<>'
+const MIXPANEL_API_TOKEN = IS_PRODUCTION ? '<>' : '<>'
 const TRACKING_URL = '<>'
 
 // from http://stackoverflow.com/a/8809472
@@ -20,7 +20,7 @@ function generateUUID () {
 const userTrackingId = generateUUID()
 
 export function trackEvent (value, extra) {
-  if (!IS_PROD) {
+  if (!IS_PRODUCTION) {
     console.info('DEV::trackEvent', value, extra)
     return
   }
@@ -39,7 +39,7 @@ export function trackEvent (value, extra) {
 
 export function trackPageView () {
   const pathname = window.location.pathname
-  if (!IS_PROD) {
+  if (!IS_PRODUCTION) {
     console.info('DEV::trackPageView', pathname)
     return
   }
@@ -69,14 +69,14 @@ export function trackMixpanelUser (user) {
     mixpanelApiToken: MIXPANEL_API_TOKEN,
     mixpanelData: user
   }
-  if (!IS_PROD) {
+  if (!IS_PRODUCTION) {
     data.isDev = true
   }
   http.send(JSON.stringify(data))
 }
 
 export function trackFBPixelEvent (eventId, eventConfig) {
-  if (IS_PROD && window._fbq && !window.navigator.doNotTrack) {
+  if (IS_PRODUCTION && window._fbq && !window.navigator.doNotTrack) {
     window._fbq.push(['track', eventId, eventConfig])
   }
 }
