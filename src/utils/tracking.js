@@ -1,6 +1,6 @@
-import { IS_PRODUCTION } from './config'
+import { isProduction } from './config'
 
-const MIXPANEL_API_TOKEN = IS_PRODUCTION ? '<>' : '<>'
+const MIXPANEL_API_TOKEN = isProduction ? '<>' : '<>'
 const TRACKING_URL = '<>'
 
 // from http://stackoverflow.com/a/8809472
@@ -17,66 +17,77 @@ function generateUUID () {
   return uuid
 }
 
-const userTrackingId = generateUUID()
+export function createTracking (config = {}) {
+  const { isProduction } = config
 
-export function trackEvent (value, extra) {
-  if (!IS_PRODUCTION) {
-    console.info('DEV::trackEvent', value, extra)
-    return
+  const userTrackingId = generateUUID()
+  
+  function trackEvent (value, extra) {
+    if (!isProduction) {
+      console.info('DEV::trackEvent', value, extra)
+      return
+    }
+    if (window.navigator.doNotTrack) {
+      return
+    }
+    if (window.ga) {
+      window.ga('send', 'event', 'Click', value, extra, { 'nonInteraction': true })
+    }
+    if (window.mixpanel && window.mixpanel.track) {
+      window.mixpanel.track(value, { 'extra': extra })
+    }
+    window['optimizely'] = window['optimizely'] || []
+    window.optimizely.push(['trackEvent', value])
   }
-  if (window.navigator.doNotTrack) {
-    return
-  }
-  if (window.ga) {
-    window.ga('send', 'event', 'Click', value, extra, { 'nonInteraction': true })
-  }
-  if (window.mixpanel && window.mixpanel.track) {
-    window.mixpanel.track(value, { 'extra': extra })
-  }
-  window['optimizely'] = window['optimizely'] || []
-  window.optimizely.push(['trackEvent', value])
-}
 
-export function trackPageView () {
-  const pathname = window.location.pathname
-  if (!IS_PRODUCTION) {
-    console.info('DEV::trackPageView', pathname)
-    return
+  export function trackPageView () {
+    const pathname = window.location.pathname
+    if (!isProduction) {
+      console.info('DEV::trackPageView', pathname)
+      return
+    }
+    if (window.navigator.doNotTrack || !window.ga) {
+      return
+    }
+    window.ga('set', 'page', pathname)
+    window.ga('send', 'pageview')
   }
-  if (window.navigator.doNotTrack || !window.ga) {
-    return
-  }
-  window.ga('set', 'page', pathname)
-  window.ga('send', 'pageview')
-}
 
-export function trackException (e) {
-  if (window.navigator.doNotTrack || !window.ga || !e) {
-    return
+  export function trackException (e) {
+    if (window.navigator.doNotTrack || !window.ga || !e) {
+      return
+    }
+    window.ga('send', 'exception', {
+      exDescription: 'JavaScript Error ' + e.message + ' ' + e.filename + ': ' + e.lineno
+    })
   }
-  window.ga('send', 'exception', {
-    exDescription: 'JavaScript Error ' + e.message + ' ' + e.filename + ': ' + e.lineno
-  })
-}
 
-export function trackMixpanelUser (user) {
-  const http = new window.XMLHttpRequest()
+  export function trackMixpanelUser (user) {
+    const http = new window.XMLHttpRequest()
 
-  http.open('POST', TRACKING_URL, true)
-  http.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
-  let data = {
-    id: userTrackingId,
-    mixpanelApiToken: MIXPANEL_API_TOKEN,
-    mixpanelData: user
+    http.open('POST', TRACKING_URL, true)
+    http.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+    let data = {
+      id: userTrackingId,
+      mixpanelApiToken: MIXPANEL_API_TOKEN,
+      mixpanelData: user
+    }
+    if (!isProduction) {
+      data.isDev = true
+    }
+    http.send(JSON.stringify(data))
   }
-  if (!IS_PRODUCTION) {
-    data.isDev = true
-  }
-  http.send(JSON.stringify(data))
-}
 
-export function trackFBPixelEvent (eventId, eventConfig) {
-  if (IS_PRODUCTION && window._fbq && !window.navigator.doNotTrack) {
-    window._fbq.push(['track', eventId, eventConfig])
+  function trackFBPixelEvent (eventId, eventConfig) {
+    if (isProduction && window._fbq && !window.navigator.doNotTrack) {
+      window._fbq.push(['track', eventId, eventConfig])
+    }
+  }
+
+  return { trackEvent,
+    trackException,
+    trackMixpanelUser,
+    trackFBPixelEvent,
+    trackPageView
   }
 }
