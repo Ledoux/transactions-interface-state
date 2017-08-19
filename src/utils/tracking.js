@@ -1,27 +1,23 @@
-import { isProduction } from './config'
-
-const MIXPANEL_API_TOKEN = isProduction ? '<>' : '<>'
-const TRACKING_URL = '<>'
-
-// from http://stackoverflow.com/a/8809472
-function generateUUID () {
-  var d = new Date().getTime()
-  if (typeof window !== 'undefined' && window.performance && typeof window.performance.now === 'function') {
-    d += window.performance.now() // use high-precision timer if available
-  }
-  var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (d + Math.random() * 16) % 16 | 0
-    d = Math.floor(d / 16)
-    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
-  })
-  return uuid
-}
-
 export function createTracking (config = {}) {
   const { isProduction } = config
+  const MIXPANEL_API_TOKEN = isProduction ? '<>' : '<>'
+  const TRACKING_URL = '<>'
 
+  // from http://stackoverflow.com/a/8809472
+  function generateUUID () {
+    var d = new Date().getTime()
+    if (typeof window !== 'undefined' && window.performance && typeof window.performance.now === 'function') {
+      d += window.performance.now() // use high-precision timer if available
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (d + Math.random() * 16) % 16 | 0
+      d = Math.floor(d / 16)
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+    })
+    return uuid
+  }
   const userTrackingId = generateUUID()
-  
+
   function trackEvent (value, extra) {
     if (!isProduction) {
       console.info('DEV::trackEvent', value, extra)
@@ -40,7 +36,7 @@ export function createTracking (config = {}) {
     window.optimizely.push(['trackEvent', value])
   }
 
-  export function trackPageView () {
+  function trackPageView () {
     const pathname = window.location.pathname
     if (!isProduction) {
       console.info('DEV::trackPageView', pathname)
@@ -53,7 +49,7 @@ export function createTracking (config = {}) {
     window.ga('send', 'pageview')
   }
 
-  export function trackException (e) {
+  function trackException (e) {
     if (window.navigator.doNotTrack || !window.ga || !e) {
       return
     }
@@ -62,7 +58,7 @@ export function createTracking (config = {}) {
     })
   }
 
-  export function trackMixpanelUser (user) {
+  function trackMixpanelUser (user) {
     const http = new window.XMLHttpRequest()
 
     http.open('POST', TRACKING_URL, true)
