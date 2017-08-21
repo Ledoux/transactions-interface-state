@@ -24,12 +24,12 @@ export function navigation (state = intialState, action) {
   }
 }
 
-export function closeNavigation () {
-  trackEvent('closeNavigation')
+export function closeNavigation (action = {}) {
+  action.trackEvent && action.trackEvent('closeNavigation')
   return { type: CLOSE_NAVIGATION }
 }
 
-export function showNavigation () {
-  trackEvent('showNavigation')
+export function showNavigation (action = {}) {
+  action.trackEvent && action.trackEvent('showNavigation')
   return { type: SHOW_NAVIGATION }
 }

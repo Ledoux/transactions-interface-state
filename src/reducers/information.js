@@ -24,12 +24,12 @@ export function information (state = intialState, action) {
   }
 }
 
-export function closeInformation () {
-  trackEvent('closeInformation')
+export function closeInformation (action = {}) {
+  action.trackEvent && action.trackEvent('closeInformation')
   return { type: CLOSE_INFORMATION }
 }
 
-export function showInformation () {
-  trackEvent('showInformation')
+export function showInformation (action = {}) {
+  action.trackEvent && action.trackEvent('showInformation')
   return { type: SHOW_INFORMATION }
 }
