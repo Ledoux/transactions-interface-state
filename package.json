@@ -19,7 +19,8 @@
     "lodash.values": "^4.3.0",
     "pluralize": "^3.0.0",
     "transactions-redux-reselector": "latest",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-saga": "^0.15.3"
   },
   "description": "In the framework of transactions, this is a frontend plugin that gives you smart reducers for your app state",
   "devDependencies": {
@@ -40,5 +41,5 @@
     "dev": "npm run dev",
     "dev-watch": "nodemon --watch src --exec \"npm run compile\""
   },
-  "version": "0.0.11"
+  "version": "0.0.12"
 }
