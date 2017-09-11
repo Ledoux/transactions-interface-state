@@ -4,13 +4,13 @@ const SET_MODAL_QUERY = 'SET_MODAL_QUERY'
 const CLOSE_MODAL = 'CLOSE_MODAL'
 const SHOW_MODAL = 'SHOW_MODAL'
 
-const intialState = {
+const initialState = {
   isActive: false,
   content: null,
   query: null
 }
 
-export function modal (state = intialState, action) {
+export function modal (state = initialState, action) {
   switch (action.type) {
     case SET_MODAL_QUERY:
       return assign({}, state, {

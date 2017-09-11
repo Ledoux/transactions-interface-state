@@ -2,9 +2,9 @@ import assign from 'lodash.assign'
 
 export const ASSIGN_IN_FLASH = 'ASSIGN_IN_FLASH'
 
-const intialState = null
+const initialState = null
 
-export function flash (state = intialState, action) {
+export function flash (state = initialState, action) {
   switch (action.type) {
     case ASSIGN_IN_FLASH:
       return assign({}, state, action.patch)

@@ -2,7 +2,8 @@
   "ava": {
     "babel": {
       "presets": [
-        "latest"
+        "latest",
+        "react"
       ]
     },
     "require": [
@@ -36,7 +37,7 @@
   "main": "lib/index.js",
   "name": "transactions-interface-state",
   "scripts": {
-    "compile": "babel --presets latest -d lib/ src/",
+    "compile": "babel --presets latest,react -d lib/ src/",
     "test": "ava -v",
     "dev": "npm run dev",
     "dev-watch": "nodemon --watch src --exec \"npm run compile\""

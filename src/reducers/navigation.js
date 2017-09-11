@@ -5,11 +5,11 @@ import { trackEvent } from '../utils/tracking'
 export const SHOW_NAVIGATION = 'SHOW_NAVIGATION'
 export const CLOSE_NAVIGATION = 'CLOSE_NAVIGATION'
 
-const intialState = {
+const initialState = {
   isActive: false
 }
 
-export function navigation (state = intialState, action) {
+export function navigation (state = initialState, action) {
   switch (action.type) {
     case SHOW_NAVIGATION:
       return assign({}, state, {

@@ -5,11 +5,11 @@ import { trackEvent } from '../utils/tracking'
 export const CLOSE_INFORMATION = 'CLOSE_INFORMATION'
 export const SHOW_INFORMATION = 'SHOW_INFORMATION'
 
-const intialState = {
+const initialState = {
   isActive: false
 }
 
-export function information (state = intialState, action) {
+export function information (state = initialState, action) {
   switch (action.type) {
     case SHOW_INFORMATION:
       return assign({}, state, {

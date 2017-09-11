@@ -26,7 +26,7 @@ export function reselect (id, filterState, elements) {
       return elements
     case 'WITH_ENTITY_NAME_JOIN':
       return filterState.entityName && elements.filter(element =>
-        element.entityName === filter.entityName)
+        element.entityName === filterState.entityName)
     case 'WITH_IDS':
       return filterState.ids && filterState.ids.map(id => elements.find(element =>
       element.id === id)).filter(element => element)
