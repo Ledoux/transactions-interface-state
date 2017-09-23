@@ -28,12 +28,10 @@ export const Header = WrappedComponent => {
         state={this.state} />
     }
   }
-
   _Header.defaultProps = {
     menuLinks: [],
     siteName: 'Transactions'
   }
-
   function mapStateToProps ({ authorization,
     router: { location: { pathname } },
     user
@@ -59,6 +57,6 @@ export const Header = WrappedComponent => {
     }
     return newState
   }
-  
+
   return connect(mapStateToProps)(_Header)
 }

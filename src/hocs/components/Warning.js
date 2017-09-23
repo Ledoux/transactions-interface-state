@@ -14,11 +14,26 @@ export const Warning = WrappedComponent => {
       const { beforeCloseModal,
         closeModal,
         nextLocation,
+        nextPathname,
+        nextSearch,
         push
       } = this.props
       beforeCloseModal && beforeCloseModal()
       closeModal()
-      nextLocation && push(nextLocation)
+      if (nextLocation) {
+        push(nextLocation)
+      } else {
+        let possibleNextLocation = {}
+        if (nextSearch) {
+          possibleNextLocation.search = nextSearch
+        }
+        if (nextPathname) {
+          possibleNextLocation.pathname = nextPathname
+        }
+        if (Object.keys(possibleNextLocation).length > 0) {
+          push(possibleNextLocation)
+        }
+      }
     }
     render () {
       return <WrappedComponent {...this.props}

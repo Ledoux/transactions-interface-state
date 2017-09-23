@@ -27,22 +27,8 @@ export const Modal = WrappedComponent => {
         SearchComponent,
         showModal
       } = this.props
-      const { icon,
-        modal,
-        text
-      } = search
       if (SearchComponent) {
-        const nextSearch = Object.assign({}, search)
-        delete nextSearch.modal
-        delete nextSearch.icon
-        delete nextSearch.text
-        showModal(<SearchComponent
-          icon={icon}
-          nextLocation={{
-            search: getLocationSearchString(nextSearch)
-          }}
-          text={text}
-        />)
+        showModal(<SearchComponent {...search} />)
       }
     }
     _onCloseClick () {

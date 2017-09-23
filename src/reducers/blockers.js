@@ -1,14 +1,36 @@
-const ADD_BLOCKERS_METHOD = 'ADD_BLOCKERS_METHOD'
+const APPEND_BLOCKERS_METHOD = 'APPEND_BLOCKERS_METHOD'
+const PUSH_BLOCKERS_METHOD = 'PUSH_BLOCKERS_METHOD'
 const REMOVE_BLOCKERS_METHOD = 'REMOVE_BLOCKERS_METHOD'
 const RESET_BLOCKERS = 'RESET_BLOCKERS'
 
+export function shouldScroll (nextLocation) {
+  // pop check
+  if (nextLocation.pathname !== window.location.pathname) {
+    // Keep default behavior of restoring scroll position when user:
+    // - clicked back button
+    // - clicked on a link that programmatically calls `history.goBack()`
+    // - manually changed the URL in the address bar (here we might want
+    // to scroll to top, but we can't differentiate it from the others)
+    if (nextLocation.action === 'POP') {
+      return
+    }
+    // In all other cases, scroll to top
+    window.scrollTo(0, 0)
+  }
+}
+
+const initialState = [shouldScroll]
+
 export function createBlockers (history) {
   let historyBlockUnlistener = null
-  function blockers (state = [], action) {
+  function blockers (state = initialState, action) {
     let newBlockers = state
     switch (action.type) {
-      case ADD_BLOCKERS_METHOD:
-        newBlockers = state.concat(action.method)
+      case APPEND_BLOCKERS_METHOD:
+        newBlockers = [action.method].concat(state)
+        break
+      case PUSH_BLOCKERS_METHOD:
+        newBlockers = state.concat([action.method])
         break
       case REMOVE_BLOCKERS_METHOD:
         newBlockers = state.filter(method => method != action.method)
@@ -38,9 +60,15 @@ export function createBlockers (history) {
   return blockers
 }
 
-export function addBlockersMethod (method) {
+export function appendBlockersMethod (method) {
   return { method,
-    type: ADD_BLOCKERS_METHOD
+    type: APPEND_BLOCKERS_METHOD
+  }
+}
+
+export function pushBlockersMethod (method) {
+  return { method,
+    type: PUSH_BLOCKERS_METHOD
   }
 }
 

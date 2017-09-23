@@ -4,7 +4,14 @@ export function getLocationSearch (searchString = '') {
   if (items) {
     items.map(item => item.split('='))
     .forEach(couples => {
-      search[couples[0]] = decodeURIComponent(couples[1])
+      let value = decodeURIComponent(couples[1])
+      /*
+      const parseMatch = value.match(/_PARSE_(.*)/)
+      if (parseMatch && parseMatch[1]) {
+        value = JSON.parse(parseMatch[1])
+      }
+      */
+      search[couples[0]] = value
     })
   }
   return search
@@ -19,8 +26,7 @@ export function getLocationSearchString (search) {
       .join('&')
 }
 
-export function getUpdatedSearchString (search) {
-  const oldSearch = getLocationSearch(window.location.search)
-  const newSearch = Object.assign(oldSearch, search)
-  return getLocationSearchString(newSearch)
+export function getUpdatedSearchString (...searchs) {
+  const nextSearch = Object.assign({}, ...searchs)
+  return getLocationSearchString(nextSearch)
 }

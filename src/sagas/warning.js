@@ -12,15 +12,18 @@ export function * fromWatchTransactionFails ({ method,
   tag
 }) {
   if (error) {
-    const ModalComponent = yield select(({ modalViewer: { warning } }) => warning )
-    if (!ModalComponent) {
-      return
+    const isModalActive = yield select(({ modal: { isActive } }) => isActive)
+    if (!isModalActive) {
+      const ModalComponent = yield select(({ modalViewer: { warning } }) => warning )
+      if (!ModalComponent) {
+        return
+      }
+      yield put(showModal(<ModalComponent
+        icon='warning'
+        subtext={error}
+        text={`Error with a \"${method} ${tag || ''}\" request`}
+      />))
     }
-    yield put(showModal(<ModalComponent
-      icon='warning'
-      subtext={error}
-      text={`Error with a \"${method} ${tag || ''}\" request`}
-    />))
   }
 }
 
