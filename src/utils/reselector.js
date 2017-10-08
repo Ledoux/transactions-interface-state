@@ -14,9 +14,6 @@ export const initialState = {
     sign: null,
     key: null,
     value: null
-  },
-  WITH_UNIQ_USER_JOIN: {
-    userId: null
   }
 }
 
@@ -37,10 +34,6 @@ export function reselect (id, filterState, elements) {
     case 'WITH_SIGN_JOIN':
       return filterState.key && filterState.value && [elements.find(element =>
         element[filterState.key] === filterState.value)]
-          .filter(element => element)
-    case 'WITH_UNIQ_USER_JOIN':
-      return filterState.userId && [elements.find(element =>
-        element.userId === filterState.userId)]
           .filter(element => element)
     default:
       return 'next'
