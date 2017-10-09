@@ -10,6 +10,7 @@ export const initialState = {
     key: null,
     value: null
   },
+  WITH_NOT_IS_SEEN: {},
   WITH_SIGN_JOIN: {
     sign: null,
     key: null,
@@ -31,6 +32,8 @@ export function reselect (id, filterState, elements) {
       return filterState.key && filterState.value && [elements.find(element =>
         element[filterState.key] === filterState.value)]
           .filter(element => element)
+    case 'WITH_NOT_IS_SEEN':
+      return elements.filter(({ isSeen }) => !isSeen)
     case 'WITH_SIGN_JOIN':
       return filterState.key && filterState.value && [elements.find(element =>
         element[filterState.key] === filterState.value)]
