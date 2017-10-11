@@ -21,10 +21,12 @@ export const Information = WrappedComponent => {
       const { hasRequestedOnce } = this.state
       if (userId && !hasRequestedOnce) {
         this.setState({ hasRequestedOnce: true })
+        /*
         request('GET', [{
           collectionName: 'notifications',
           query: { userId },
         }], { tag: 'notifications' })
+        */
       }
     }
     componentDidUpdate (prevProps) {
