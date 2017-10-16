@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import reselect from 'reselect'
 
 export const withComputedProps = (patch, config = {}) => WrappedComponent => {
   const { isOnlyMount } = config
@@ -10,21 +11,13 @@ export const withComputedProps = (patch, config = {}) => WrappedComponent => {
     _compute (props, prevProps) {
       // init
       const newState = {}
-      // parse to see which props has changed compared to the previous ones
-      // (given shallow equality rule)
-      // if there is a change then feed the new state with the new computed values
+      // compute each value for each key
+      // (best practice here is to use reselect methods as value)
       Object.keys(patch)
         .forEach(key => {
-          const value = props[key]
-          if (!prevProps || value !== prevProps[key]) {
-            const method = patch[key]
-            newState[key] = method(props)
-          }
+          newState[key] = props[key](props)
         })
-      // now check that there is one change at least
-      if (Object.keys(newState).length > 0) {
-        this.setState(newState)
-      }
+      this.setState(newState)
     }
     componentWillMount () {
       this.compute(this.props)
