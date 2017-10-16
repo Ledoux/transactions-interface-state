@@ -15,7 +15,7 @@ export const withComputedProps = (patch, config = {}) => WrappedComponent => {
       // (best practice here is to use reselect methods as value)
       Object.keys(patch)
         .forEach(key => {
-          newState[key] = props[key](props)
+          newState[key] = patch[key](props)
         })
       this.setState(newState)
     }
