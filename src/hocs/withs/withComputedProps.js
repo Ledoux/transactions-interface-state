@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export const withReplacedProps = (patch, config = {}) => WrappedComponent => {
+export const withComputedProps = (patch, config = {}) => WrappedComponent => {
   const { isOnlyMount } = config
-  class _withReplacedProps extends Component {
+  class _withComputedProps extends Component {
     constructor (props) {
       super (props)
-      this.replace = this._replace.bind(this)
+      this.compute = this._compute.bind(this)
     }
-    _replace (props, prevProps) {
+    _compute (props, prevProps) {
       // init
       const newState = {}
       // parse to see which props has changed compared to the previous ones
@@ -27,16 +27,16 @@ export const withReplacedProps = (patch, config = {}) => WrappedComponent => {
       }
     }
     componentWillMount () {
-      this.replace(this.props)
+      this.compute(this.props)
     }
     componentWillReceiveProps (nextProps) {
       if (!isOnlyMount) {
-        this.replace(nextProps, this.props)
+        this.compute(nextProps, this.props)
       }
     }
     render () {
       return <WrappedComponent {...this.props} {...this.state} />
     }
   }
-  return _withReplacedProps
+  return _withComputedProps
 }
