@@ -8,7 +8,7 @@ export const withComputedProps = (patch, config = {}) => WrappedComponent => {
       super (props)
       this.compute = this._compute.bind(this)
     }
-    _compute (props, prevProps) {
+    _compute (props) {
       // init
       const newState = {}
       // compute each value for each key
@@ -24,7 +24,7 @@ export const withComputedProps = (patch, config = {}) => WrappedComponent => {
     }
     componentWillReceiveProps (nextProps) {
       if (!isOnlyMount) {
-        this.compute(nextProps, this.props)
+        this.compute(nextProps)
       }
     }
     render () {
