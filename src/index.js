@@ -1,4 +1,5 @@
 export * from './hocs/components'
+export * from './hocs/withs'
 export * from './reducers/blockers'
 export * from './reducers/flash'
 export * from './reducers/information'

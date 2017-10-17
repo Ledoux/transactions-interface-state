@@ -24,10 +24,10 @@ export const Fetcher = WrappedComponent => {
       this.onCollectionNameChange = this._onCollectionNameChange.bind(this)
       this.onQueryStringChange = this._onQueryStringChange.bind(this)
     }
-    _onCollectionNameChange () {
+    _onCollectionNameChange (event) {
       this.setState({ selectedCollectionName: event.target.value })
     }
-    _onQueryStringChange () {
+    _onQueryStringChange (event) {
       this.setState({ queryString: event.target.value })
     }
     render () {
