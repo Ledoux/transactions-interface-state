@@ -20,6 +20,7 @@
     "lodash.values": "^4.3.0",
     "pluralize": "^3.0.0",
     "react-addons-shallow-compare": "^15.6.0",
+    "react": "^16.0.0",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
     "redux-saga": "^0.15.3",
@@ -44,5 +45,5 @@
     "dev": "npm run dev",
     "dev-watch": "nodemon --watch src --exec \"npm run compile\""
   },
-  "version": "0.0.17"
+  "version": "0.0.18"
 }
