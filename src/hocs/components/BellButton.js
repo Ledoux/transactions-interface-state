@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { getNormalizerEntities } from 'transactions-redux-normalizer'
+
 import { closeInformation,
   showInformation
-} from 'transactions-interface-state'
-import { getNormalizerEntities } from 'transactions-redux-normalizer'
+} from '../../reducers/information'
 
 export const BellButton = WrappedComponent => {
   WrappedComponent.propTypes = { closeInformation: PropTypes.func.isRequired,

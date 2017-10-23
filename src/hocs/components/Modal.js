@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { closeModal,
   showModal
 } from '../../reducers/modal'
+import { getViewerComponent } from '../../reducers/viewer'
 import { getLocationSearchString } from '../../utils/location'
 
 export const Modal = WrappedComponent => {
@@ -51,24 +52,24 @@ export const Modal = WrappedComponent => {
     closeModal: PropTypes.func.isRequired,
     content: PropTypes.node
   }
-  const mapStateToProps = ({ modal: { beforeCloseModal,
-      content,
-      isActive,
-      isCtaCloseButton,
-      isCornerCloseButton,
-      isOutCloseButton
-    },
-    modalViewer,
-    search
-  }) => {
-    const SearchComponent = search.modal && modalViewer[search.modal]
+  const mapStateToProps = state => {
+    const { modal: { beforeCloseModal,
+        content,
+        isActive,
+        isCtaCloseButton,
+        isCornerCloseButton,
+        isOutCloseButton
+      },
+      search
+    } = state
+    const SearchComponent = search.modal &&
+      getViewerComponent(state, 'modal', search.modal)
     return { beforeCloseModal,
       content,
       isActive,
       isCtaCloseButton,
       isCornerCloseButton,
       isOutCloseButton,
-      modalViewer,
       search: SearchComponent && search,
       SearchComponent
     }

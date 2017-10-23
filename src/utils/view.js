@@ -1,6 +1,6 @@
 import pluralize from 'pluralize'
 
-export function createViewer (categoryName, componentsByComponentName = {}, config = {}) {
+function createView (categoryName, componentsByComponentName = {}, config = {}) {
   const { isPlural } = config
   const componentsBySingularOrPluralName = {}
   Object.keys(componentsByComponentName)
@@ -12,5 +12,7 @@ export function createViewer (categoryName, componentsByComponentName = {}, conf
         `${prefixName[0].toLowerCase()}${prefixName.slice(1)}`
       ] = Component
     })
-  return (state=componentsBySingularOrPluralName) => state
+  return componentsBySingularOrPluralName
 }
+
+export default createView
