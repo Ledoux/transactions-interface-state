@@ -1,5 +1,6 @@
 export * from './Avatar'
 export * from './BellButton'
+export * from './EmblemLink'
 export * from './EntitiesList'
 export * from './Fetcher'
 export * from './HamburgerButton'

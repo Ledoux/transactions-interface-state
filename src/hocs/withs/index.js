@@ -1,2 +1,6 @@
 export * from './withComputedProps'
-export * from './withProps'
+export * from './withCounter'
+export * from './withEntities'
+export * from './withDefaultProps'
+export * from './withForcedProps'
+export * from './withRequest'
