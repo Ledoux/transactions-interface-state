@@ -18,6 +18,7 @@ export const withCounter = (arrayKey, config = {}) => WrappedComponent => {
         this.handleSetInterval(nextProps)
     }
     _handleSetInterval (props) {
+      const { intervalTime, isBlocked } = props
       const array = props[arrayKey]
       if (!array || array.length === 0) {
         return
@@ -25,7 +26,7 @@ export const withCounter = (arrayKey, config = {}) => WrappedComponent => {
       if (this.state.selectedIndex === null) {
         this.setState({ selectedIndex: 0 })
       }
-      this.countInterval = setInterval(() => {
+      this.countInterval = !isBlocked && setInterval(() => {
         const { selectedIndex } = this.state
         if (selectedIndex ===  array.length - 1) {
           if (isLoop) {
@@ -37,7 +38,7 @@ export const withCounter = (arrayKey, config = {}) => WrappedComponent => {
         } else {
           this.setState({ selectedIndex: selectedIndex + 1 })
         }
-      }, props.intervalTime)
+      }, intervalTime)
     }
     componentWillUnmount () {
       this.countInterval && clearInterval(this.countInterval)
