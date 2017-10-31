@@ -20,8 +20,10 @@ export const withRequest = (onKeys, getRequestArgs) => WrappedComponent => {
       }
     }
     _handleRequest (props) {
+      const { request, specialRequest } = props
       const requestArgs = getRequestArgs(props)
-      props.request(...requestArgs)
+      const localRequest = specialRequest || request
+      localRequest(...requestArgs)
     }
     render () {
       return <WrappedComponent {...this.props} />

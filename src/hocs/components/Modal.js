@@ -33,9 +33,7 @@ export const Modal = WrappedComponent => {
       }
     }
     _onCloseClick () {
-      const { closeModal,
-        nextLocation
-      } = this.props
+      const { closeModal } = this.props
       closeModal()
     }
     render () {

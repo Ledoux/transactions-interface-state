@@ -5,6 +5,8 @@ import { request } from 'transactions-redux-request'
 import { showModal } from '../../reducers/modal'
 import { getViewerComponent } from '../../reducers/viewer'
 
+const mailTest = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 export const Footer = WrappedComponent => {
   class _Footer extends Component {
     constructor () {
@@ -12,30 +14,48 @@ export const Footer = WrappedComponent => {
       this.onSubscribeClick = this._onSubscribeClick.bind(this)
     }
     _onSubscribeClick (email) {
-      const { ModalComponent,
-        newsletterSubtitle,
-        newsletterTitle,
+      const { ConfirmationComponent,
+        confirmationSubtext,
+        confirmationText,
         request,
-        showModal
+        showModal,
+        WarningComponent,
+        warningSubtext,
+        warningText
       } = this.props
-      //request('POST', [{ email }])
-      ModalComponent && showModal(
-        <ModalComponent
-          subtitle={newsletterSubtitle}
-          title={newsletterTitle} />,
-        { isCtaCloseButton: true }
-      )
+      if (mailTest.test(email)) {
+        // request
+        request('POST', [{
+          collectionName: 'subscribers',
+          documents: [{ email }]
+        }], { tag: 'subscribers'})
+        // modal
+        ConfirmationComponent && showModal(
+          <ConfirmationComponent subtext={confirmationSubtext}
+            text={confirmationText} />,
+          { isCtaCloseButton: true }
+        )
+      } else {
+        // modal
+        WarningComponent && showModal(
+          <WarningComponent subtext={warningSubtext}
+            text={warningText} />
+        )
+      }
     }
     render () {
       return <WrappedComponent {...this.props}
         onSubscribeClick={this.onSubscribeClick} />
     }
   }
-  _Footer.defaultProps = { newsletterSubtitle: 'We will keep you informed about the next updates!',
-    newsletterTitle: 'Thanks a lot!'
+  _Footer.defaultProps = { confirmationSubtext: 'We will keep you informed about the next updates!',
+    confirmationText: 'Thanks a lot!',
+    warningSubtext: 'You need to enter a valid email',
+    warningText: 'Wrong shape!'
   }
   return connect((state, { newsletterModal }) => ({
-    ModalComponent: getViewerComponent(state, 'modal', newsletterModal || 'confirmation')
+    ConfirmationComponent: getViewerComponent(state, 'modal', 'confirmation'),
+    WarningComponent: getViewerComponent(state, 'modal', 'warning')
   }), { request,
     showModal
   })(_Footer)
