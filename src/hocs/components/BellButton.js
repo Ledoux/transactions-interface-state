@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getNormalizerEntities } from 'transactions-redux-normalizer'
+import { getNormalizerEntities } from 'transactions-redux-react'
 
 import { closeInformation,
   showInformation

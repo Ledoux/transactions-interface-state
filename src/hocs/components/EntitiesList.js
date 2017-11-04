@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getNormalizerEntities,
   request
-} from 'transactions-redux-request'
+} from 'transactions-redux-react'
 
 export const EntitiesList = WrappedComponent => {
   class _EntitiesList extends Component {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getNormalizerEntity } from 'transactions-redux-normalizer'
+import { getNormalizerEntity } from 'transactions-redux-react'
 
 export const Avatar = WrappedComponent => {
   function mapStateToProps(state, { id, imageUrl }) {

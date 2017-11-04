@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { getLocationSearchString } from 'transactions-redux-react'
 
 import { closeModal,
   showModal
 } from '../../reducers/modal'
 import { getViewerComponent } from '../../reducers/viewer'
-import { getLocationSearchString } from '../../utils/location'
 
 export const Modal = WrappedComponent => {
   class _Modal extends Component {
@@ -58,7 +58,7 @@ export const Modal = WrappedComponent => {
         isCornerCloseButton,
         isOutCloseButton
       },
-      search
+      router: { search }
     } = state
     const SearchComponent = search.modal &&
       getViewerComponent(state, 'modal', search.modal)

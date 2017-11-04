@@ -26,7 +26,7 @@
     "redux-saga": "^0.15.3",
     "reselect": "^2.5.1",
     "shortid": "^2.2.6",
-    "transactions-redux-reselector": "latest"
+    "transactions-redux-react": "latest"
   },
   "description": "In the framework of transactions, this is a frontend plugin that gives you smart reducers for your app state",
   "devDependencies": {
@@ -47,5 +47,5 @@
     "dev": "npm run dev",
     "dev-watch": "nodemon --watch src --exec \"npm run compile\""
   },
-  "version": "0.0.23"
+  "version": "0.0.24"
 }
