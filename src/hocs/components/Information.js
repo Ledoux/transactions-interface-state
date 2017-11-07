@@ -31,6 +31,7 @@ export const Information = WrappedComponent => {
       const { closeInformation,
         currentTourUser,
         isActive,
+        mergeNormalizerEntities,
         pathname,
         request,
         notSeenNotifications,
@@ -39,18 +40,17 @@ export const Information = WrappedComponent => {
       // when we close the information menu
       // we can set to seen the previous unseen notifications
       if (prevProps.isActive && !isActive) {
+        console.log('currentTourUser', currentTourUser)
         if (currentTourUser) {
           const entities = notSeenNotifications.map(notSeenNotification => {
-            return {
-              id: notSeenNotification.id,
+            return { id: notSeenNotification.id,
               isSeen: true
             }
           })
           mergeNormalizerEntities('notifications', entities)
         } else if (notSeenNotifications.length > 0) {
           request('PUT', [{ collectionName: 'notifications',
-            query: {
-              isSeen: false,
+            query: { isSeen: false,
               userId
             },
             update: { isSeen: true }
