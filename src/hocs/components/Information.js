@@ -2,31 +2,15 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { closeInformation } from 'transactions-interface-state'
-import { getNormalizerEntities,
-  mergeNormalizerEntities
+import { mergeNormalizerEntities
 } from 'transactions-redux-normalizer'
+import { withRequestedEntities } from 'transactions-redux-react'
 import { request } from 'transactions-redux-request'
 
 export const Information = WrappedComponent => {
   class _Information extends Component {
-    constructor () {
-      super ()
-      this.state = { hasRequestedOnce: false }
-    }
-    componentDidMount () {
-      const { request,
-        userId
-      } = this.props
-      const { hasRequestedOnce } = this.state
-      if (userId && !hasRequestedOnce) {
-        this.setState({ hasRequestedOnce: true })
-        request('GET', [{
-          collectionName: 'notifications',
-          query: { userId },
-        }], { tag: 'notifications' })
-      }
-    }
     componentDidUpdate (prevProps) {
       const { closeInformation,
         currentTourUser,
@@ -40,7 +24,9 @@ export const Information = WrappedComponent => {
       // when we close the information menu
       // we can set to seen the previous unseen notifications
       if (prevProps.isActive && !isActive) {
-        console.log('currentTourUser', currentTourUser)
+        if (!notSeenNotifications) {
+          return
+        }
         if (currentTourUser) {
           const entities = notSeenNotifications.map(notSeenNotification => {
             return { id: notSeenNotification.id,
@@ -64,27 +50,26 @@ export const Information = WrappedComponent => {
       return <WrappedComponent {...this.props} />
     }
   }
-
-  const mapStateToProps = state => {
-    const { information: { isActive },
-      reselector: { reselect },
+  return compose(
+    connect(({ user: { id } }) => ({ userId: id })),
+    withRequestedEntities(({ userId }) =>
+      [{ collectionName: 'notifications', query: { userId } }]
+    ),
+    connect(({ information: { isActive },
       router: { location: { pathname } },
-      tour: { currentTourUser },
-      user: { id }
-    } = state
-    const notifications = getNormalizerEntities(state, 'notifications')
-    const notSeenNotifications = reselect(state, 'WITH_NOT_IS_SEEN', 'notifications')
-    return { isActive,
-      currentTourUser,
-      notifications,
-      notSeenNotifications,
-      pathname,
-      userId: id
-    }
-  }
-
-  return connect(mapStateToProps, { closeInformation,
-    mergeNormalizerEntities,
-    request
-  })(_Information)
+      tour: { currentTourUser }
+    }, { notifications }) => {
+      const notSeenNotifications = notifications && notifications.filter(
+        ({ isSeen }) => !isSeen)
+      return { isActive,
+        currentTourUser,
+        notSeenNotifications,
+        pathname
+      }
+    }, {
+      closeInformation,
+      mergeNormalizerEntities,
+      request
+    })
+  )(_Information)
 }

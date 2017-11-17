@@ -1,42 +1,19 @@
 import classnames from 'classnames'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { withComputedProps } from 'transactions-redux-react'
 
 const withoutSigninPaths = ['/signin', '/signup']
 
-export const Header = WrappedComponent => {
-  class _Header extends Component {
-    constructor () {
-      super ()
-      this.state = { visibleLinks: null }
-      this.handleFilterVisibleLinks = this._handleSetVisibleLinks.bind(this)
-    }
-    componentWillMount() {
-      this.handleFilterVisibleLinks(this.props)
-    }
-    componentWillReceiveProps (nextProps) {
-      this.handleFilterVisibleLinks(nextProps)
-    }
-    _handleSetVisibleLinks (props) {
-      const { menuLinks } = props
-      menuLinks && this.setState({ visibleLinks: menuLinks.filter(({ getIsVisible }) =>
-        !getIsVisible || getIsVisible(props)
-      )})
-    }
-    render () {
-      return <WrappedComponent {...this.props}
-        state={this.state} />
-    }
-  }
-  _Header.defaultProps = {
-    menuLinks: [],
-    siteName: 'Transactions'
-  }
-  function mapStateToProps ({ authorization,
+export const Header = compose(
+  connect(({ authorization,
     router: { location: { pathname } },
+    setup: { params: { pageName } },
     user
-  }) {
+  }) => {
     const newState = { isSigninPage: withoutSigninPaths.includes(pathname),
+      pageName,
       pathname
     }
     if (authorization) {
@@ -56,7 +33,10 @@ export const Header = WrappedComponent => {
       })
     }
     return newState
-  }
-
-  return connect(mapStateToProps)(_Header)
-}
+  }),
+  withComputedProps({
+    visibleLinks: props => props.menuLinks &&
+      props.menuLinks.filter(({ getIsVisible }) =>
+        !getIsVisible || getIsVisible(props))
+  })
+)
