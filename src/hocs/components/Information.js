@@ -53,8 +53,7 @@ export const Information = WrappedComponent => {
   return compose(
     connect(({ user: { id } }) => ({ userId: id })),
     withRequestedEntities(({ userId }) =>
-      [{ collectionName: 'notifications', query: { userId } }]
-    ),
+      userId && [{ collectionName: 'notifications', query: { userId } }]),
     connect(({ information: { isActive },
       router: { location: { pathname } },
       tour: { currentTourUser }
