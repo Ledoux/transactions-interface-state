@@ -7,7 +7,7 @@ import pluralize from 'pluralize'
 
 function createView (categoryName, ComponentsByName = {}, config = {}) {
   // unpack
-  const { collectionNames, isJoin, isPlural } = config
+  const { isPlural } = config
   const componentsBySingularOrPluralName = {}
   // map
   Object.keys(ComponentsByName)
@@ -16,8 +16,8 @@ function createView (categoryName, ComponentsByName = {}, config = {}) {
       const Component = ComponentsByName[key]
       let contentName = key.slice(0, -categoryName.length)
       contentName = `${contentName[0].toLowerCase()}${contentName.slice(1)}`
-      const collectionName = pluralize(contentName, 2)
-      contentName = isPlural ? collectionName : contentName
+      const pluralName = pluralize(contentName, 2)
+      contentName = isPlural ? pluralName : contentName
       // set
       componentsBySingularOrPluralName[contentName] = Component
     })

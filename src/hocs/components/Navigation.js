@@ -18,16 +18,11 @@ export const Navigation = WrappedComponent => {
       return <WrappedComponent {...this.props} />
     }
   }
-
-  const mapStateToProps = ({ navigation: { isActive },
-    router: { location: { pathname } },
-    user: { email }
-  }) => {
-    return { email,
+  return connect(({ navigation: { isActive },
+      router: { location: { pathname } },
+      user: { email }
+    }) => ({ email,
       isActive,
       pathname
-    }
-  }
-
-  return connect(mapStateToProps, { closeNavigation })(_Navigation)
+    }), { closeNavigation })(_Navigation)
 }

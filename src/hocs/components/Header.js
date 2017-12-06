@@ -8,12 +8,11 @@ const withoutSigninPaths = ['/signin', '/signup']
 
 export const Header = compose(
   connect(({ authorization,
-    router: { location: { pathname } },
-    setup: { params: { pageName } },
+    router: { location: { pathname }, params },
     user
   }) => {
     const newState = { isSigninPage: withoutSigninPaths.includes(pathname),
-      pageName,
+      pageName: params && params.pageName,
       pathname
     }
     if (authorization) {
