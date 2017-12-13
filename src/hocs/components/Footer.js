@@ -55,6 +55,7 @@ export const Footer = WrappedComponent => {
   }
   return connect((state, { newsletterModal }) => ({
     ConfirmationComponent: getViewerComponent(state, 'modal', 'confirmation'),
+    siteEmail: state.setup.siteEmail,
     WarningComponent: getViewerComponent(state, 'modal', 'warning')
   }), { request,
     showModal
