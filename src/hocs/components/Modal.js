@@ -44,13 +44,13 @@ export const Modal = WrappedComponent => {
   _Modal.defaultProps = {
     search: {}
   }
-  _Modal.PropTypes = {
+  _Modal.propTypes = {
     isActive: PropTypes.bool.isRequired,
     beforeCloseModal: PropTypes.func.isRequired,
     closeModal: PropTypes.func.isRequired,
     content: PropTypes.node
   }
-  const mapStateToProps = state => {
+  return connect(state => {
     const { modal: { beforeCloseModal,
         content,
         isActive,
@@ -71,8 +71,5 @@ export const Modal = WrappedComponent => {
       search: SearchComponent && search,
       SearchComponent
     }
-  }
-  return connect(mapStateToProps, { closeModal,
-    showModal
-  })(_Modal)
+  }, { closeModal, showModal })(_Modal)
 }
