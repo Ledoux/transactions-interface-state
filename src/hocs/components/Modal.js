@@ -41,12 +41,9 @@ export const Modal = WrappedComponent => {
         onCloseClick={this.onCloseClick} />
     }
   }
-  _Modal.defaultProps = {
-    search: {}
-  }
   _Modal.propTypes = {
     isActive: PropTypes.bool.isRequired,
-    beforeCloseModal: PropTypes.func.isRequired,
+    beforeCloseModal: PropTypes.func,
     closeModal: PropTypes.func.isRequired,
     content: PropTypes.node
   }
