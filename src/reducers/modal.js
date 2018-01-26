@@ -1,12 +1,11 @@
 import assign from 'lodash.assign'
 
 const SET_MODAL_QUERY = 'SET_MODAL_QUERY'
-const CLOSE_MODAL = 'CLOSE_MODAL'
-const SHOW_MODAL = 'SHOW_MODAL'
+export const CLOSE_MODAL = 'CLOSE_MODAL'
+export const SHOW_MODAL = 'SHOW_MODAL'
 
-const initialState = {
+const initialState = { ContentComponent: null,
   isActive: false,
-  content: null,
   query: null
 }
 
@@ -19,7 +18,7 @@ export function modal (state = initialState, action) {
     case SHOW_MODAL:
       return assign({}, state, Object.assign({
         isActive: true,
-        content: action.newContent || state.content
+        ContentComponent: action.ContentComponent || state.ContentComponent,
       }, action.config))
     case CLOSE_MODAL:
       return assign({}, state, {
@@ -28,7 +27,7 @@ export function modal (state = initialState, action) {
         isActive: false,
         isCtaCloseButton: false,
         isCornerCloseButton: false,
-        isOutCloseButton: false
+        isOutCloseButton: false,
       })
     default:
       return state
@@ -39,10 +38,10 @@ export function closeModal () {
   return { type: CLOSE_MODAL }
 }
 
-export function showModal (newContent, config) {
+export function showModal (modalElement, config) {
   return {
-    type: SHOW_MODAL,
     config,
-    newContent
+    ContentComponent: () => modalElement,
+    type: SHOW_MODAL
   }
 }

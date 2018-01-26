@@ -44,12 +44,11 @@ export const Modal = WrappedComponent => {
   _Modal.propTypes = {
     isActive: PropTypes.bool.isRequired,
     beforeCloseModal: PropTypes.func,
-    closeModal: PropTypes.func.isRequired,
-    content: PropTypes.node
+    closeModal: PropTypes.func.isRequired
   }
   return connect(state => {
     const { modal: { beforeCloseModal,
-        content,
+        ContentComponent,
         isActive,
         isCtaCloseButton,
         isCornerCloseButton,
@@ -60,7 +59,7 @@ export const Modal = WrappedComponent => {
     const SearchComponent = search.modal &&
       getViewerComponent(state, 'modal', search.modal)
     return { beforeCloseModal,
-      content,
+      ContentComponent,
       isActive,
       isCtaCloseButton,
       isCornerCloseButton,
