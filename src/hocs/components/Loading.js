@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
 
-export const Loading = WrappedComponent => {
-  function mapStateToProps ({ loading: { isActive } }) {
-    return { isActive }
-  }
-  return connect(mapStateToProps)(WrappedComponent)
-}
+export const Loading = connect(
+  (state, ownProps) => ({ 
+    isActive: state.loading.isActive && ownProps.tag === state.loading.tag
+  })
+)

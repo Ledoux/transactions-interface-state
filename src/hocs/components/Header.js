@@ -4,18 +4,17 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { withComputedProps } from 'transactions-redux-react'
 
-export const withoutSigninPaths = ['/signin', '/signup']
+export const withoutSignPageNames = ['/signin', '/signup']
 
 export const Header = compose(
   connect(({ authorization,
     navigation: { menuLinks },
-    router: { location: { pathname }, params },
+    router: { params: { pageName } },
     user
   }) => {
-    const newState = { isSigninPage: withoutSigninPaths.includes(pathname),
+    const newState = { isSigninPage: withoutSignPageNames.includes(pageName),
       menuLinks,
-      pageName: params && params.pageName,
-      pathname
+      pageName
     }
     if (authorization) {
       const { visibleModes } = authorization

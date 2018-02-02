@@ -1,17 +1,22 @@
 export const SHOW_LOADING = 'SHOW_LOADING'
 export const CLOSE_LOADING = 'CLOSE_LOADING'
 
-const intialState = {}
+const intialState = {
+  isActive: false,
+  tag: null
+}
 
 export function loading (state = intialState, action) {
   switch (action.type) {
     case SHOW_LOADING:
       return Object.assign({}, state, {
-        isActive: true
+        isActive: true,
+        tag: action.tag
       })
     case CLOSE_LOADING:
       return Object.assign({}, state, {
-        isActive: false
+        isActive: false,
+        tag: null
       })
     default:
       return state
@@ -19,8 +24,9 @@ export function loading (state = intialState, action) {
 }
 
 // ACTIONS
-export function showLoading () {
+export function showLoading (tag) {
   return {
+    tag,
     type: SHOW_LOADING
   }
 }

@@ -8,9 +8,9 @@ export const Navigation = WrappedComponent => {
     componentDidUpdate (prevProps) {
       const { closeNavigation,
         isActive,
-        pathname
+        pageName
       } = this.props
-      if (isActive && prevProps.pathname !== pathname) {
+      if (isActive && prevProps.pageName !== pageName) {
         closeNavigation()
       }
     }
@@ -18,11 +18,12 @@ export const Navigation = WrappedComponent => {
       return <WrappedComponent {...this.props} />
     }
   }
-  return connect(({ navigation: { isActive },
-      router: { location: { pathname } },
-      user: { email }
-    }) => ({ email,
-      isActive,
-      pathname
-    }), { closeNavigation })(_Navigation)
+  return connect(
+    state => ({
+      email: user.email,
+      isActive: state.navigation.isActive,
+      pageName: state.router.params.pageName,
+    }),
+    { closeNavigation }
+  )(_Navigation)
 }

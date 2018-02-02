@@ -16,7 +16,7 @@ export const Information = WrappedComponent => {
         currentTourUser,
         isActive,
         mergeNormalizerEntities,
-        pathname,
+        pageName,
         request,
         notSeenNotifications,
         userId
@@ -42,7 +42,7 @@ export const Information = WrappedComponent => {
             update: { isSeen: true }
           }], { tag: 'notifications' })
         }
-      } else if (isActive && prevProps.pathname !== pathname) {
+      } else if (isActive && prevProps.pageName !== pageName) {
         closeInformation()
       }
     }
@@ -55,7 +55,7 @@ export const Information = WrappedComponent => {
     withRequestedEntities(({ userId }) =>
       userId && [{ collectionName: 'notifications', query: { userId } }]),
     connect(({ information: { isActive },
-      router: { location: { pathname } },
+      router: { params: { pageName } },
       tour: { currentTourUser }
     }, { notifications }) => {
       const notSeenNotifications = notifications && notifications.filter(
@@ -63,7 +63,7 @@ export const Information = WrappedComponent => {
       return { isActive,
         currentTourUser,
         notSeenNotifications,
-        pathname
+        pageName
       }
     }, {
       closeInformation,
