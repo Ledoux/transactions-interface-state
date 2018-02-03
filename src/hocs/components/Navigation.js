@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { compose } from 'redux'
 
 import { closeNavigation } from '../../reducers/navigation'
 
@@ -18,12 +20,15 @@ export const Navigation = WrappedComponent => {
       return <WrappedComponent {...this.props} />
     }
   }
-  return connect(
-    state => ({
-      email: user.email,
-      isActive: state.navigation.isActive,
-      pageName: state.router.params.pageName,
-    }),
-    { closeNavigation }
+  return compose(
+    withRouter,
+    connect(
+      (state, ownProps) => ({
+        email: user.email,
+        isActive: state.navigation.isActive,
+        pageName: ownProps.match.params.pageName,
+      }),
+      { closeNavigation }
+    )
   )(_Navigation)
 }

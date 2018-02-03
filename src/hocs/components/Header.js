@@ -1,17 +1,18 @@
 import classnames from 'classnames'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import { withComputedProps } from 'transactions-redux-react'
 
 export const withoutSignPageNames = ['/signin', '/signup']
 
 export const Header = compose(
+  withRouter,
   connect(({ authorization,
     navigation: { menuLinks },
-    router: { params: { pageName } },
     user
-  }) => {
+  }, { match: { params: { pageName } } }) => {
     const newState = { isSigninPage: withoutSignPageNames.includes(pageName),
       menuLinks,
       pageName

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { compose } from 'redux'
 import { getLocationSearchString } from 'transactions-redux-react'
 
 import { closeModal,
@@ -46,26 +48,29 @@ export const Modal = WrappedComponent => {
     beforeCloseModal: PropTypes.func,
     closeModal: PropTypes.func.isRequired
   }
-  return connect(state => {
-    const { modal: { beforeCloseModal,
+  return compose(
+    withRouter,
+    connect((state, ownProps) => {
+      const { modal: { beforeCloseModal,
+          ContentComponent,
+          isActive,
+          isCtaCloseButton,
+          isCornerCloseButton,
+          isOutCloseButton
+        },
+      } = state
+      const { location: { query } } = ownProps
+      const SearchComponent = query.modal &&
+        getViewerComponent(state, 'modal', query.modal)
+      return { beforeCloseModal,
         ContentComponent,
         isActive,
         isCtaCloseButton,
         isCornerCloseButton,
-        isOutCloseButton
-      },
-      router: { search }
-    } = state
-    const SearchComponent = search.modal &&
-      getViewerComponent(state, 'modal', search.modal)
-    return { beforeCloseModal,
-      ContentComponent,
-      isActive,
-      isCtaCloseButton,
-      isCornerCloseButton,
-      isOutCloseButton,
-      search: SearchComponent && search,
-      SearchComponent
-    }
-  }, { closeModal, showModal })(_Modal)
+        isOutCloseButton,
+        search: SearchComponent && query,
+        SearchComponent
+      }
+    }, { closeModal, showModal })
+  )(_Modal)
 }

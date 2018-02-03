@@ -2,11 +2,15 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import { closeInformation } from 'transactions-interface-state'
 import { mergeNormalizerEntities
 } from 'transactions-redux-normalizer'
-import { withRequestedEntities } from 'transactions-redux-react'
+import { createComputer,
+  withComputedProps,
+  withRequestedEntities
+} from 'transactions-redux-react'
 import { request } from 'transactions-redux-request'
 
 export const Information = WrappedComponent => {
@@ -51,18 +55,22 @@ export const Information = WrappedComponent => {
     }
   }
   return compose(
+    withRouter,
     connect(({ user: { id } }) => ({ userId: id })),
     withRequestedEntities(({ userId }) =>
       userId && [{ collectionName: 'notifications', query: { userId } }]),
+    withComputedProps({
+      notSeenNotifications: createComputer(
+        ({ notifications }) => notifications,
+        notifications => notifications && notifications.filter(
+          ({ isSeen }) => !isSeen)
+      )
+    }),
     connect(({ information: { isActive },
-      router: { params: { pageName } },
       tour: { currentTourUser }
-    }, { notifications }) => {
-      const notSeenNotifications = notifications && notifications.filter(
-        ({ isSeen }) => !isSeen)
+    }, { match: { params: { pageName } } }) => {
       return { isActive,
         currentTourUser,
-        notSeenNotifications,
         pageName
       }
     }, {
